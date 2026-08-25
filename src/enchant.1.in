@@ -51,7 +51,7 @@ See
 .BR enchant (5)
 for details of configuration files and personal word lists.
 .SH "SEE ALSO"
-.BR enchant-@ENCHANT_MAJOR_VERSION@ (5),
+.BR enchant (5),
 .BR aspell (1),
 .BR enchant-lsmod-@ENCHANT_MAJOR_VERSION@ (1)
 .SH "AUTHOR"
