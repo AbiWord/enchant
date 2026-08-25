@@ -1,3 +1,10 @@
+2.8.20 (August 25, 2026)
+------------------------
+
+This release improves the man page for enchant(1), mostly by documenting
+Ispell command-line options and pipe-mode commands that it ignores.
+
+
 2.8.19 (July 7, 2026)
 ---------------------
 
