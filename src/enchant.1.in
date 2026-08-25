@@ -46,6 +46,28 @@ display help and exit
 .TP
 .B "\-v"
 display version information and exit
+.SH ISPELL COMPATIBILITY
+.B Enchant
+does not implement the following Ispell commands and command-line options.
+They are all accepted, but ignored, and have no effect.
+.TP
+.B "\-m"
+.TP
+.B "\-B"
+.TP
+.B "\-C"
+.TP
+.B "+"
+Enter TeX mode
+.TP
+.B "-"
+Enter nroff mode (the default)
+.TP
+.B "~"
+Set parameters based on file name
+.TP
+.B "`"
+Enter verbose-correction mode
 .SH FILES AND DIRECTORIES
 See
 .BR enchant (5)
