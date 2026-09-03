@@ -122,3 +122,11 @@ TEST_FIXTURE(EnchantBrokerFreeTestFixture,
     _broker = NULL;
     CHECK(disposeDictionaryCalled);
 }
+
+TEST_FIXTURE(EnchantBrokerFreeTestFixture,
+             EnchantBrokerFree_FailedCompositeDictionary_FreesComponents)
+{
+    EnchantDict* dict = enchant_broker_request_dict(_broker, "en_GB,zz");
+    CHECK_EQUAL((EnchantDict*)NULL, dict);
+    CHECK(disposeDictionaryCalled);
+}

@@ -37,6 +37,21 @@ static void Request_Dictionary_ProviderConfiguration (EnchantProvider * me)
      me->dispose_dict = MockProviderDisposeDictionary;
 }
 
+static EnchantProviderDict * RequestDictionaryWithPwlFallbackError (EnchantProvider *me, const char *tag)
+{
+    if (strcmp(tag, "qaa_CA") == 0) {
+        enchant_provider_set_error(me, "qaa_CA is unavailable");
+        return NULL;
+    }
+    return MockEnGbAndQaaProviderRequestDictionary(me, tag);
+}
+
+static void Request_Dictionary_FallbackError_ProviderConfiguration (EnchantProvider * me)
+{
+     me->request_dict = RequestDictionaryWithPwlFallbackError;
+     me->dispose_dict = MockProviderDisposeDictionary;
+}
+
 struct EnchantBrokerRequestDictionaryWithPwl_TestFixture : EnchantBrokerTestFixture
 {
     EnchantDict* _pwl;
@@ -57,6 +72,22 @@ struct EnchantBrokerRequestDictionaryWithPwl_TestFixture : EnchantBrokerTestFixt
     {
         FreeDictionary(_dict);
         FreeDictionary(_pwl);
+    }
+
+    EnchantDict* _dict;
+};
+
+struct EnchantBrokerRequestDictionaryWithPwlFallbackError_TestFixture : EnchantBrokerTestFixture
+{
+    EnchantBrokerRequestDictionaryWithPwlFallbackError_TestFixture():
+            EnchantBrokerTestFixture(Request_Dictionary_FallbackError_ProviderConfiguration)
+    {
+        _dict = NULL;
+    }
+
+    ~EnchantBrokerRequestDictionaryWithPwlFallbackError_TestFixture()
+    {
+        FreeDictionary(_dict);
     }
 
     EnchantDict* _dict;
@@ -171,6 +202,15 @@ TEST_FIXTURE(EnchantBrokerRequestDictionaryWithPwl_TestFixture,
 
   _dict = enchant_broker_request_dict_with_pwl(_broker, "en-GB", _pwlFileName.c_str());
 
+  CHECK_EQUAL((void*)NULL, (void*)enchant_broker_get_error(_broker));
+}
+
+TEST_FIXTURE(EnchantBrokerRequestDictionaryWithPwlFallbackError_TestFixture,
+             EnchantBrokerRequestDictionaryWithPwl_FallbackSuccess_ErrorCleared)
+{
+  _dict = enchant_broker_request_dict(_broker, "qaa_CA");
+
+  CHECK(_dict);
   CHECK_EQUAL((void*)NULL, (void*)enchant_broker_get_error(_broker));
 }
 

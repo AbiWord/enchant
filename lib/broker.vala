@@ -285,10 +285,15 @@ public class EnchantBroker {
 			unowned EnchantDict? session = this._request_dict(normalized_tag, pwl);
 			if (session == null)
 				session = this._request_dict(iso_639_from_tag(normalized_tag), pwl);
-			if (session == null)
+			if (session == null) {
+				foreach (EnchantDict partial_session in session_list)
+					this.sessions.remove(partial_session);
 				return null;
+			}
 			session_list.append(session);
 		}
+
+		this.clear_error();
 
 		// If there was only one tag, return a single dictionary.
 		if (session_list.length() == 1)
