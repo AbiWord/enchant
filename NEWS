@@ -1,3 +1,14 @@
+2.8.21 (September 3, 2026)
+--------------------------
+
+This release fixes two bugs in composite dictionaries: first, if any
+dictionary creation failed during creation of a composite dictionary,
+dictionaries already created would be leaked; and secondly, the broker error
+status could end up indicating an error incorrectly when one provider or
+language failed and a fallback later succeeded. Thanks to @lpyuu for the
+report and fixes.
+
+
 2.8.20 (August 25, 2026)
 ------------------------
 
